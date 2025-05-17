@@ -1,0 +1,89 @@
+---
+description: This document outlines how to use the `agent-checklist` CLI tool to manage a list of tasks. This tool is designed to help an AI agent keep track of its objectives and progress.
+globs: 
+alwaysApply: false
+---
+# Using the Agent Checklist CLI
+
+This document outlines how to use the `agent-checklist` CLI tool to manage a list of tasks. This tool is designed to help an AI agent keep track of its objectives and progress.
+
+The main script for the CLI tool is `[index.ts](mdc:index.ts)`. The project's dependencies and scripts can be found in `[package.json](mdc:package.json)`.
+
+## Running Commands
+
+You can run the CLI tool using Bun:
+
+```bash
+bun run index.ts <command> [arguments]
+```
+
+If the package has been linked (e.g., via `bun link`), you can also use its global name:
+
+```bash
+agent-checklist <command> [arguments]
+```
+
+Tasks are stored locally in a `checklist.sqlite` file.
+
+## Available Commands
+
+Here are the primary commands to interact with your task list:
+
+### 1. Add a new task
+
+To add a new task to the checklist, use the `add` command followed by a description of the task in quotes.
+
+**Syntax:**
+`agent-checklist add "<task_description>"`
+
+**Example:**
+`agent-checklist add "Refactor the authentication module"`
+`bun run index.ts add "Write unit tests for the new parser"`
+
+### 2. List all tasks
+
+To view all current tasks, their status (completed or pending), and their IDs, use the `list` command.
+
+**Syntax:**
+`agent-checklist list`
+
+**Example Output:**
+```
+[ ] 1: Refactor the authentication module
+[x] 2: Outline the new feature proposal
+[ ] 3: Write unit tests for the new parser
+```
+- `[ ]` indicates a pending task.
+- `[x]` indicates a completed task.
+- The number is the task ID.
+
+### 3. Mark a task as completed
+
+To mark a task as completed, use the `complete` command followed by the task ID.
+
+**Syntax:**
+`agent-checklist complete <task_id>`
+
+**Example:**
+`agent-checklist complete 3` (Marks task with ID 3 as completed)
+
+### 4. Remove a task
+
+To remove a task from the checklist (e.g., if it's no longer relevant or was added by mistake), use the `remove` command followed by the task ID.
+
+**Syntax:**
+`agent-checklist remove <task_id>`
+
+**Example:**
+`agent-checklist remove 2` (Removes task with ID 2 from the list)
+
+### 5. Install Cursor Rule
+
+To install the helpful Cursor rule for this CLI into your **current project's** Cursor setup, run:
+
+**Syntax:**
+`agent-checklist install-rule`
+
+This will copy the `agent_checklist_cli_usage.mdc` file to your project's `./.cursor/rules/` directory, making it available for Cursor to use when that project is open.
+
+By using these commands, an AI agent can effectively manage its to-do list directly from the command line.

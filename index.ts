@@ -2,6 +2,8 @@
 
 import { Command } from "commander";
 import { Database } from "bun:sqlite";
+import fs from "node:fs";
+import path from "node:path";
 
 const program = new Command();
 const db = new Database("checklist.sqlite", { create: true });
@@ -88,6 +90,42 @@ program
 			console.log(`Removed task ${taskId}.`);
 		} catch (error) {
 			console.error("Failed to remove task:", error);
+		}
+	});
+
+program
+	.command("install-rule")
+	.description(
+		"Install the Cursor rule for this CLI to .cursor/rules/ in the current project",
+	)
+	.action(() => {
+		const ruleFileName = "agent_checklist_cli_usage.mdc";
+		const sourcePath = path.join(import.meta.dir, "..", ruleFileName);
+
+		// Use process.cwd() for the current project directory
+		const targetDir = path.join(process.cwd(), ".cursor", "rules");
+		const targetPath = path.join(targetDir, ruleFileName);
+
+		try {
+			if (!fs.existsSync(sourcePath)) {
+				console.error(
+					`Error: Rule file not found at ${sourcePath}. This might be an issue with the package installation.`,
+				);
+				return;
+			}
+
+			fs.mkdirSync(targetDir, { recursive: true });
+			fs.copyFileSync(sourcePath, targetPath);
+			console.log(`Successfully copied rule to ${targetPath}`);
+			console.log("Please restart Cursor to see the new rule.");
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				console.error(`Failed to install Cursor rule: ${error.message}`);
+			} else {
+				console.error(
+					"Failed to install Cursor rule: An unknown error occurred",
+				);
+			}
 		}
 	});
 
