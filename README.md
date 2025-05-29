@@ -1,6 +1,7 @@
-# agent-checklist
+# Agent Checklist
 
-**agent-checklist** is a CLI tool designed for code agents like [Cursor](https://www.cursor.sh). It uses [Bun](https://bun.sh) as its runtime, package manager, and build tool. Data is stored locally using Bun’s built-in SQLite integration.
+**agent-checklist** is a CLI tool designed for code agents like [Cursor](https://www.cursor.sh). It creates an sqlite database in your project and manages checklists for your coding agent. It has (for me) reduced hallucinations and weird coding tangents by a lot. It also helps a smaller faster model perform better over long, complex conversations.
+
 
 ## 🚀 Installation
 
