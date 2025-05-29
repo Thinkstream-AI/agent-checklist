@@ -1,4 +1,4 @@
-# agent_checklist
+# agent-checklist
 
 This is a CLI tool designed for code agents like Cursor. It leverages Bun as its runtime, package manager, and build tool. The tool uses Bun's built-in SQLite integration to store and manage data.
 
